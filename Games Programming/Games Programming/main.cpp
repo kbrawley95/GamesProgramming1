@@ -37,22 +37,17 @@ int main(int argc, char **argv)
 	Background* bkGround = new Background(input);
 	bkGround->AssignTexture(bkGroundTexture->getTexture());
 	bkGround->Scale = vec2(width * 2, height * 2);
+	bkGround->Position = vec2(width, height);
 	sprites.push_back(bkGround);
 
-	/*
-		Texture* bkGroundTexture2 = new Texture("");
+	//Background2
+	Texture* bkGroundTexture2 = new Texture("Images/background.png");
 	Background* bkGround2 = new Background(input);
 	bkGround2->AssignTexture(bkGroundTexture2->getTexture());
 	bkGround2->Scale = vec2(width * 2, height * 2);
+	bkGround->Position = vec2(width, -height);
 	sprites.push_back(bkGround2);
-	*/
-	//Background2
 	
-
-	if (bkGround->Position == vec2 (3,3))
-	{
-
-	}
 	
 	
 
