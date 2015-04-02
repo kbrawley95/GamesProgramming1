@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Asteroid.h"
 
+
 //Public Varibles
 vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
@@ -20,10 +21,10 @@ void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
 //void glutLeaveMainLoop(void);
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	//Initialize Glut
-	glutInit(&argc, argv);
+	glutInit(&argc, (char**) argv);
 
 	//Initialize Core
 	input = new Input();
@@ -41,6 +42,21 @@ int main(int argc, char **argv)
 	{
 		glutLeaveMainLoop();
 	}*/
+
+	ISoundEngine* engine = createIrrKlangDevice();
+
+	if (!engine)
+		return 0;
+
+	engine->play2D("Audio/goinghigher.mp3", true);
+
+	char i = 0;
+	if (input->GetKey(KEYS::P))
+	{
+		engine->drop();
+		return 0;
+	}
+
 
 	//Background 1
 	Texture* bkGroundTexture = new Texture("Images/space.jpg");
@@ -76,17 +92,7 @@ int main(int argc, char **argv)
 		asteroids[i]->Position = vec2(rand() % (800 + 1), rand()%(-600-(-100)));
 	}
 
-	/*Texture* asteroidTexture = new Texture("Images/asteroid.png");
-	Asteroid* a = new Asteroid(input);
-	a->AssignTexture(asteroidTexture->getTexture());
-	a->Scale = vec2(120, 120);
-	a->Position = vec2(rand() % (800 - 1), -100);
-	sprites.push_back(a);*/
 	
-
-	
-
-
 
 	//Setup OpenGL Methods
 	glutReshapeFunc(Reshape);

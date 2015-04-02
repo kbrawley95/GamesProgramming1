@@ -81,12 +81,16 @@
     <ClInclude Include="KEYS.h" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="..\..\..\..\..\Downloads\irrKlang-64bit-1.5.0\irrKlang-64bit-1.5.0\lib\Winx64-visualStudio\irrKlang.lib" />
     <Library Include="Libraries\DevIL.lib" />
     <Library Include="Libraries\freeglut.lib" />
     <Library Include="Libraries\glew32.lib" />
     <Library Include="Libraries\glew32s.lib" />
     <Library Include="Libraries\ILU.lib" />
     <Library Include="Libraries\ILUT.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Libraries\irrKlang.exp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

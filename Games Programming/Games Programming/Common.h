@@ -13,6 +13,7 @@
 #include "GL\glut.h"
 #include "GL\freeglut.h"
 #include "glm\glm.hpp"
+#include "include\irrKlang.h"
 
 // Image Texture loading library
 #include "IL\il.h"
@@ -26,3 +27,4 @@
 
 using namespace std;
 using namespace glm;
+using namespace irrklang;
