@@ -3,9 +3,11 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Background.h"
+#include "Asteroid.h"
 
 //Public Varibles
 vector<Sprite*> sprites;
+vector<Asteroid*> asteroids;
 Input* input;
 int width = 800;
 int height = 600;
@@ -16,6 +18,7 @@ void Render();
 void Update(int i);
 void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
+void glutLeaveMainLoop(void);
 
 int main(int argc, char **argv)
 {
@@ -25,6 +28,8 @@ int main(int argc, char **argv)
 	//Initialize Core
 	input = new Input();
 
+
+
 	//setup some memory buffers for our display
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH);
 
@@ -32,33 +37,54 @@ int main(int argc, char **argv)
 	glutInitWindowSize(width, height);
 	glutCreateWindow("Rock N Load");
 
+	if (input->GetKey(KEYS::EscapeKey))
+	{
+		glutLeaveMainLoop();
+	}
+
 	//Background 1
-	Texture* bkGroundTexture = new Texture("Images/background.png");
+	Texture* bkGroundTexture = new Texture("Images/space.jpg");
 	Background* bkGround = new Background(input);
 	bkGround->AssignTexture(bkGroundTexture->getTexture());
 	bkGround->Scale = vec2(width * 2, height * 2);
-	bkGround->Position = vec2(width, height);
+	bkGround->Position = vec2(0, 0);
 	sprites.push_back(bkGround);
 
 	//Background2
-	Texture* bkGroundTexture2 = new Texture("Images/background.png");
+	Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
 	Background* bkGround2 = new Background(input);
 	bkGround2->AssignTexture(bkGroundTexture2->getTexture());
 	bkGround2->Scale = vec2(width * 2, height * 2);
-	bkGround->Position = vec2(width, -height);
+	bkGround2->Position = vec2(0, 0);
 	sprites.push_back(bkGround2);
-	
-	
-	
 
-
-	//Create Game
+	//Player Ship
 	Texture* t = new Texture("Images/ship.png");
 	Player* p = new Player(input);
 	p->AssignTexture(t->getTexture());
 	p->Scale = vec2(50, 50);
 	p->Position = vec2(400, 500);
 	sprites.push_back(p);
+
+	//Asteroids
+	for (int i = 0; i < 5; i++)
+	{
+		Texture* a = new Texture("Images/asteroid.png");
+		asteroids.push_back(new Asteroid);
+		asteroids[i]->AssignTexture(a->getTexture());
+		asteroids[i]->Scale = vec2(120, 120);
+		asteroids[i]->Position = vec2(rand() % (800 + 1), rand()%(-600-(-100)));
+	}
+
+	/*Texture* asteroidTexture = new Texture("Images/asteroid.png");
+	Asteroid* a = new Asteroid(input);
+	a->AssignTexture(asteroidTexture->getTexture());
+	a->Scale = vec2(120, 120);
+	a->Position = vec2(rand() % (800 - 1), -100);
+	sprites.push_back(a);*/
+	
+
+	
 
 
 
@@ -108,6 +134,10 @@ void Render()
 	{
 		s->Render();
 	}
+	for (Asteroid* a : asteroids)
+	{
+		a->Render();
+	}
 
 	glutSwapBuffers();
 }
@@ -117,6 +147,11 @@ void Update(int i)
 	for (Sprite* s : sprites)
 	{
 		s->FixedUpdate();
+	}
+
+	for (Asteroid* a: asteroids)
+	{
+		a->FixedUpdate();
 	}
 
 	// Reset timer
@@ -134,3 +169,5 @@ void KeyboardDown(unsigned char k, int x, int y)
 {
 	input->SetKey((KEYS)((int)toupper(k)), true);
 }
+
+void glutLeaveMainLoop(void);

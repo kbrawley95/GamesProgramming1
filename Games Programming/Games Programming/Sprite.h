@@ -35,6 +35,10 @@ public:
 	void AddForce(vec2 f);
 	void AddTorque(float t);
 
+	//Bounding Box
+	void getBoundingRect(RECT* Rect)
+
+	Sprite();
 	Sprite(Input* input);
 	~Sprite();
 };

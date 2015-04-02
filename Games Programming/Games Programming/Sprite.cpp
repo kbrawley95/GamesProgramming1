@@ -14,6 +14,11 @@ Sprite::Sprite(Input* input)
 	Mass = 1;
 }
 
+Sprite::Sprite()
+{
+
+}
+
 
 Sprite::~Sprite()
 {

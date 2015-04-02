@@ -1,6 +1,6 @@
 #pragma once
 
-enum KEYS 
+enum KEYS
 {
 	A = 65,
 	B = 66,
@@ -37,5 +37,7 @@ enum KEYS
 	ArrowUp = 56,
 	ArrowDown = 50,
 	ArrowRight = 54,
-	ArrowLeft = 52
+	ArrowLeft = 52,
+	EscapeKey = 27
+
 };

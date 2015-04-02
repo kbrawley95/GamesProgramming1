@@ -12,9 +12,11 @@ Background::~Background()
 
 void Background::Update()
 {
-	Position += vec2(0, 1);
+	//Scroll Speed
+	Position.y += 3;
 
-	if (Position.y == 1199)
+	//If the texture reaches the bottom of the screen, reset position
+	if (Position.y > 599)
 	{
 		Position.y = 0;
 	}
