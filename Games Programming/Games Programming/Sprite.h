@@ -36,7 +36,7 @@ public:
 	void AddTorque(float t);
 
 	//Bounding Box
-	void getBoundingRect(RECT* Rect)
+	void getBoundingRect(RECT* Rect);
 
 	Sprite();
 	Sprite(Input* input);

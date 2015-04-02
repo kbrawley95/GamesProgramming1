@@ -18,7 +18,7 @@ void Render();
 void Update(int i);
 void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
-void glutLeaveMainLoop(void);
+//void glutLeaveMainLoop(void);
 
 int main(int argc, char **argv)
 {
@@ -37,10 +37,10 @@ int main(int argc, char **argv)
 	glutInitWindowSize(width, height);
 	glutCreateWindow("Rock N Load");
 
-	if (input->GetKey(KEYS::EscapeKey))
+	/*if (input->GetKey(KEYS::EscapeKey))
 	{
 		glutLeaveMainLoop();
-	}
+	}*/
 
 	//Background 1
 	Texture* bkGroundTexture = new Texture("Images/space.jpg");
@@ -170,4 +170,3 @@ void KeyboardDown(unsigned char k, int x, int y)
 	input->SetKey((KEYS)((int)toupper(k)), true);
 }
 
-void glutLeaveMainLoop(void);
