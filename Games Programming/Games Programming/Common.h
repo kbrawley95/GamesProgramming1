@@ -6,6 +6,7 @@
 #include <ctime>
 #include <typeinfo>
 #include <stdio.h>
+#include <conio.h>
 #include <ctype.h>
 #include <cstdlib>
 #include <list>
@@ -13,7 +14,6 @@
 #include "GL\glut.h"
 #include "GL\freeglut.h"
 #include "glm\glm.hpp"
-#include "include\irrKlang.h"
 
 // Image Texture loading library
 #include "IL\il.h"
@@ -27,4 +27,3 @@
 
 using namespace std;
 using namespace glm;
-using namespace irrklang;

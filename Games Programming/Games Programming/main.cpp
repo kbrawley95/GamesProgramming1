@@ -5,7 +5,6 @@
 #include "Background.h"
 #include "Asteroid.h"
 
-
 //Public Varibles
 vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
@@ -21,10 +20,10 @@ void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
 //void glutLeaveMainLoop(void);
 
-int main(int argc, const char **argv)
+int main(int argc, char **argv)
 {
 	//Initialize Glut
-	glutInit(&argc, (char**) argv);
+	glutInit(&argc, argv);
 
 	//Initialize Core
 	input = new Input();
@@ -41,22 +40,15 @@ int main(int argc, const char **argv)
 	/*if (input->GetKey(KEYS::EscapeKey))
 	{
 		glutLeaveMainLoop();
-	}*/
 
-	ISoundEngine* engine = createIrrKlangDevice();
-
-	if (!engine)
-		return 0;
-
-	engine->play2D("Audio/goinghigher.mp3", true);
-
-	char i = 0;
-	if (input->GetKey(KEYS::P))
-	{
-		engine->drop();
-		return 0;
-	}
-
+	mciSendString("open C:\\M0.wav alias MY_SND");
+	mciSendString("play MY_SND");
+	mciSendString("pause MY_SND");
+	mciSendString("resume MY_SND");
+	mciSendString("stop MY_SND");
+	*/
+	mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
+	mciSendString("play song1", NULL, 0, 0);
 
 	//Background 1
 	Texture* bkGroundTexture = new Texture("Images/space.jpg");
