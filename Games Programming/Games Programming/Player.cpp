@@ -18,23 +18,24 @@ void Player::setBoundingBox(BoundingBox boundingBox)
 
 void Player::Update()
 {
-	if (input->GetKey(KEYS::W) && Position.y<=_boundingBox.top)
+	if (input->GetKey(KEYS::W) )
 	{
-		Position += vec2(0, -1);
+		Position += vec2(0, -speed);
 	}
 
-	if (input->GetKey(KEYS::S) && Position.y >= _boundingBox.bottom)
+	if (input->GetKey(KEYS::S))
 	{
-		Position += vec2(0, 1);
+		Position += vec2(0, speed);
 	}
 
-	if (input->GetKey(KEYS::A) && Position.y >= _boundingBox.left)
+	if (input->GetKey(KEYS::A) )
 	{
-		Position += vec2(-1, 0);
+		Position += vec2(-speed, 0);
 	}
 
-	if (input->GetKey(KEYS::D) && Position.y <= _boundingBox.right)
+	if (input->GetKey(KEYS::D) )
 	{
-		Position += vec2(1, 0);
+		Position += vec2(speed, 0);
 	}
 }
+//Where is the code where if you press space it goes to the next scene?

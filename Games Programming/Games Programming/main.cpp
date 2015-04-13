@@ -42,7 +42,7 @@ void Render();
 void Update(int i);
 void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
-void FixedUpdate(int i);
+void ChangeScene();
 //void glutLeaveMainLoop(void);
 
 int main(int argc, char **argv)
@@ -77,9 +77,11 @@ int main(int argc, char **argv)
 
 	//Setup OpenGL Methods
 	glutReshapeFunc(Reshape);
-	glutTimerFunc( 10 , FixedUpdate, 0);
+	ChangeScene();
+	glutTimerFunc(10, Update, 0);
 	glutKeyboardUpFunc(KeyboardUp);
 	glutKeyboardFunc(KeyboardDown);
+	glutDisplayFunc(Render);
 
 	//Very important! This initializes the entry point in the OpenGL driver so we can 
 	//call the functions in the api
@@ -95,10 +97,12 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void FixedUpdate(int i)
-{
-	//Keeps repeating every 10 miliseconds
+//You forgot one thing.
+//When you change scene you have to destroy the old one
 
+void ChangeScene()
+{
+	sprites.clear();
 	switch (gameStates)
 	{
 
@@ -128,17 +132,14 @@ void FixedUpdate(int i)
 			bkGround3->Position = vec2(width/2, height/2);
 			bkGround3->speed = 0;
 			sprites.push_back(bkGround2);
-
-			glutDisplayFunc(Render);
-			glutTimerFunc(10, Update, 0);
-
 			break;
+				
 		}
-
 		case Playing:
 		{
-			mciSendString("open Audio\\rumble.mp3 type mpegvideo alias song1", NULL, 0, 0);
-			mciSendString("play song1", NULL, 0, 0);
+			mciSendString("stop song1", NULL, 0, 0);
+			mciSendString("open Audio\\rumble.mp3 type mpegvideo alias song2", NULL, 0, 0);
+			mciSendString("play song2", NULL, 0, 0);
 
 			//Background 1
 			Texture* bkGroundTexture = new Texture("Images/space.jpg");
@@ -156,12 +157,12 @@ void FixedUpdate(int i)
 
 			//Player Ship
 			Texture* t = new Texture("Images/ship.png");
+			Player* p = new Player(input);
 			p->AssignTexture(t->getTexture());
 			p->Scale = vec2(50, 50);
 			p->Position = vec2(400, 500);
 			p->setBoundingBox(p->_boundingBox);
 			sprites.push_back(p);
-
 			//Asteroids
 			for (int i = 0; i < 5; i++)
 			{
@@ -172,13 +173,8 @@ void FixedUpdate(int i)
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
 			}
-			glutDisplayFunc(Render);
-			glutTimerFunc(10, Update, 0);
-			
-
 			break;
 		}
-
 		case GameOver:
 		{
 			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
@@ -190,15 +186,9 @@ void FixedUpdate(int i)
 			bkGround->Scale = vec2(width * 2, height * 2);
 			bkGround->Position = vec2(0, 0);
 			sprites.push_back(bkGround);
-
-			glutDisplayFunc(Render);
-			glutTimerFunc(10, Update, 0);
-
 			break;
 		}
 	}
-
-	glutTimerFunc( 10, Update, 0);
 }
 
 void Reshape(int w, int h)
@@ -267,6 +257,7 @@ void Render()
 	glutSwapBuffers();
 }
 	
+//Where is Update getting called from?
 void Update(int i)
 {
 	switch (gameStates)
@@ -276,8 +267,11 @@ void Update(int i)
 
 			if (input->GetKey(KEYS::Space))
 			{
-				mciSendString("stop song1", NULL, 0,0);
-				gameStates = Playing;
+				if (gameStates != Playing)
+				{
+					gameStates = Playing;
+					ChangeScene();
+				}
 			}
 
 			bkGround->FixedUpdate();

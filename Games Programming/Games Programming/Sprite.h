@@ -17,7 +17,7 @@ public:
 	vec2 Scale;
 	bool IsStatic;
 
-
+	float speed = 2;
 	vec2 PivotOffset;
 
 	//Physics
