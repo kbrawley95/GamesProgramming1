@@ -28,6 +28,7 @@ vector<Laser*> laserBeams;
 Input* input;
 Background* bkGround = new Background(input);
 Background* bkGround2 = new Background(input);
+Background* bkGround3 = new Background(input);
 Player* p = new Player(input);
 
 
@@ -108,6 +109,14 @@ int main(int argc, char **argv)
 			bkGround2->AssignTexture(bkGroundTexture2->getTexture());
 			bkGround2->Scale = vec2(width * 2, height * 2);
 			bkGround2->Position = vec2(0, 0);
+			sprites.push_back(bkGround2);
+
+			//Text Overly
+			Texture* bkGroundTexture3 = new Texture("Images/MainMenu.png");
+			bkGround3->AssignTexture(bkGroundTexture3->getTexture());
+			bkGround3->Scale = vec2(width  , height  );
+			bkGround3->Position = vec2(width/2, height/2);
+			bkGround3->speed = 0;
 			sprites.push_back(bkGround2);
 
 			glutDisplayFunc(Render);
@@ -212,6 +221,7 @@ void Render()
 		{
 			bkGround->Render();
 			bkGround2 ->Render();
+			bkGround3->Render();
 
 			break;
 		}
@@ -264,6 +274,7 @@ void Update(int i)
 
 			bkGround->FixedUpdate();
 			bkGround2->FixedUpdate();
+			bkGround3->speed = 0;
 
 			break;
 		}
