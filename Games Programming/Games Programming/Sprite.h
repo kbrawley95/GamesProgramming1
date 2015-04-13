@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "Input.h"
 #include "Texture.h"
+#include "CircleCollider.h"
 
 class Sprite
 {
@@ -15,6 +16,8 @@ public:
 	float Rotation;
 	vec2 Scale;
 	bool IsStatic;
+
+	CircleCollider* spriteCollider;
 
 	vec2 PivotOffset;
 
@@ -37,6 +40,8 @@ public:
 
 	//Bounding Box
 	void getBoundingRect(RECT* Rect);
+	void AssignCircleCollider(CircleCollider* collider);
+	CircleCollider getCollider();
 
 	Sprite();
 	Sprite(Input* input);

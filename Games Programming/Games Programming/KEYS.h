@@ -38,6 +38,7 @@ enum KEYS
 	ArrowDown = 50,
 	ArrowRight = 54,
 	ArrowLeft = 52,
-	EscapeKey = 27
+	EscapeKey = 27,
+	Space=32
 
 };

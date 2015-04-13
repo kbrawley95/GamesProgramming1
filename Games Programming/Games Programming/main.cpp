@@ -4,11 +4,32 @@
 #include "Player.h"
 #include "Background.h"
 #include "Asteroid.h"
+#include "Laser.h"
+#include "CircleCollider.h"
+
+enum States
+{
+	MainMenu,
+	Playing,
+	GameOver
+
+};
+
+States gameStates;
 
 //Public Varibles
 vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
+vector<Laser*> laserBeams;
+
+//Instances
 Input* input;
+Background* bkGround = new Background(input);
+Background* bkGround2 = new Background(input);
+
+Player* p = new Player(input);
+
+
 int width = 800;
 int height = 600;
 
@@ -22,11 +43,14 @@ void KeyboardDown(unsigned char k, int x, int y);
 
 int main(int argc, char **argv)
 {
+	
+
 	//Initialize Glut
 	glutInit(&argc, argv);
 
 	//Initialize Core
 	input = new Input();
+	gameStates = MainMenu;
 
 
 
@@ -52,7 +76,6 @@ int main(int argc, char **argv)
 
 	//Background 1
 	Texture* bkGroundTexture = new Texture("Images/space.jpg");
-	Background* bkGround = new Background(input);
 	bkGround->AssignTexture(bkGroundTexture->getTexture());
 	bkGround->Scale = vec2(width * 2, height * 2);
 	bkGround->Position = vec2(0, 0);
@@ -60,16 +83,16 @@ int main(int argc, char **argv)
 
 	//Background2
 	Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
-	Background* bkGround2 = new Background(input);
 	bkGround2->AssignTexture(bkGroundTexture2->getTexture());
 	bkGround2->Scale = vec2(width * 2, height * 2);
 	bkGround2->Position = vec2(0, 0);
 	sprites.push_back(bkGround2);
 
 	//Player Ship
+	CircleCollider* c1 = new CircleCollider();
 	Texture* t = new Texture("Images/ship.png");
-	Player* p = new Player(input);
 	p->AssignTexture(t->getTexture());
+	p->AssignCircleCollider(c1);
 	p->Scale = vec2(50, 50);
 	p->Position = vec2(400, 500);
 	sprites.push_back(p);
@@ -77,12 +100,16 @@ int main(int argc, char **argv)
 	//Asteroids
 	for (int i = 0; i < 5; i++)
 	{
+		CircleCollider* c2 = new CircleCollider();
 		Texture* a = new Texture("Images/asteroid.png");
 		asteroids.push_back(new Asteroid);
 		asteroids[i]->AssignTexture(a->getTexture());
+		asteroids[i]->AssignCircleCollider(c2);
 		asteroids[i]->Scale = vec2(120, 120);
 		asteroids[i]->Position = vec2(rand() % (800 + 1), rand()%(-600-(-100)));
+		
 	}
+
 
 	
 
@@ -100,6 +127,25 @@ int main(int argc, char **argv)
 	{
 		fprintf(stderr, "GLEW error");
 		return 1;
+	}
+
+	switch (gameStates)
+	{
+
+		case MainMenu:
+		{
+			break;
+		}
+
+		case Playing:
+		{
+			break;
+		}
+
+		case GameOver:
+		{
+			break;
+		}
 	}
 
 	//Start up a loop that runs in the background
@@ -137,19 +183,59 @@ void Render()
 		a->Render();
 	}
 
+	for (Laser* l : laserBeams)
+	{
+		l->Render();
+	}
+
 	glutSwapBuffers();
 }
 	
 void Update(int i)
 {
+	//Lasers
+	if (input->GetKey(KEYS::Space))
+	{
+		CircleCollider* c3 = new CircleCollider();
+		Texture* l = new Texture("Images/LaserBeam.png");
+		Laser* laser = new Laser(input);
+		laser->AssignTexture(l->getTexture());
+		laser->AssignCircleCollider(c3);
+		laser->Scale = vec2(50, 50);
+		laser->Position = vec2(p->Position.x / 2, p->Position.y / 2);
+		laserBeams.push_back(laser);
+	}
+
 	for (Sprite* s : sprites)
 	{
+		if (s->getCollider()->IsColliding())
+		{
+			delete s;
+		}
+
 		s->FixedUpdate();
+
 	}
 
 	for (Asteroid* a: asteroids)
 	{
+		if (a->getCollider()->IsColliding())
+		{
+			delete a;
+		}
 		a->FixedUpdate();
+
+	}
+
+	for (Laser* l : laserBeams)
+	{
+		if (l->getCollider()->IsColliding())
+		{
+			delete l;
+		}
+
+		
+		l->FixedUpdate();
 	}
 
 	// Reset timer

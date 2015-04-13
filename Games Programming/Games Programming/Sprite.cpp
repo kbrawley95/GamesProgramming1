@@ -90,3 +90,13 @@ void Sprite::AssignTexture(GLuint t)
 {
 	GLTextureID = t;
 }
+
+void Sprite::AssignCircleCollider(CircleCollider* collider)
+{
+	spriteCollider=collider;
+}
+
+CircleCollider Sprite::getCollider()
+{
+	return *spriteCollider;
+}
