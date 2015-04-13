@@ -4,6 +4,7 @@
 Player::Player(Input* input) : Sprite(input)
 {
 	Sprite::input = input;
+	bulletDelay = 1;
 }
 
 
@@ -37,5 +38,68 @@ void Player::Update()
 	{
 		Position += vec2(speed, 0);
 	}
+
+	if (input->GetKey(KEYS::Space))
+	{
+		Shoot();
+	}
+
+	UpdateBullets();
+	RenderBullets();
 }
-//Where is the code where if you press space it goes to the next scene?
+
+void Player::Shoot()
+{
+	//Shoot only if the bullet delay is reset
+	if (bulletDelay >= 0)
+		bulletDelay--;
+
+	//If bulletDelay is at 0: Create new bullet at player position and add to list
+
+	if (bulletDelay <= 0)
+	{
+		Texture* l = new Texture("Images/LaserBeam.png");
+		Laser* laser = new Laser(input);
+		laser->AssignTexture(l->getTexture());
+		laser->Scale = vec2(50, 50);
+		laser->Position = vec2(Player::Position.x/2+200, Player::Position.y/2);
+
+		if (laserBeams.capacity() < 20)
+		{
+			laser->isVisible = true;
+			laserBeams.push_back(laser);
+		}
+
+		if (laserBeams.capacity() >=20)
+		{
+			laserBeams.clear();
+		}
+		
+	}
+
+	//Reset bulletDelay
+	if (bulletDelay == 0)
+		bulletDelay = 20;
+
+}
+
+void Player::UpdateBullets()
+{
+	float newSpeed=10;
+	
+
+	for (Laser* l : laserBeams)
+	{
+		l->Position.y= l->Position.y-newSpeed;
+
+	}
+
+}
+
+void Player::RenderBullets()
+{
+	for (Laser* l: laserBeams)
+	{
+		l->Render();
+	}
+}

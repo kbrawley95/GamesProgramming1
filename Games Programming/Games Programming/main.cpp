@@ -20,8 +20,6 @@ States gameStates;
 //Public Varibles
 vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
-vector<Laser*> laserBeams;
-
 
 
 //Instances
@@ -97,7 +95,6 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-//You forgot one thing.
 //When you change scene you have to destroy the old one
 
 void ChangeScene()
@@ -163,6 +160,7 @@ void ChangeScene()
 			p->Position = vec2(400, 500);
 			p->setBoundingBox(p->_boundingBox);
 			sprites.push_back(p);
+
 			//Asteroids
 			for (int i = 0; i < 5; i++)
 			{
@@ -173,6 +171,8 @@ void ChangeScene()
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
 			}
+
+			
 			break;
 		}
 		case GameOver:
@@ -237,11 +237,6 @@ void Render()
 				a->Render();
 			}
 
-			for (Laser* l : laserBeams)
-			{
-				l->Render();
-			}
-
 			break;
 		}
 
@@ -265,7 +260,7 @@ void Update(int i)
 		case MainMenu:
 		{
 
-			if (input->GetKey(KEYS::Space))
+			if (input->GetKey(KEYS::Return))
 			{
 				if (gameStates != Playing)
 				{
@@ -283,16 +278,7 @@ void Update(int i)
 
 		case Playing:
 		{
-			//Lasers
-			if (input->GetKey(KEYS::Space))
-			{
-				Texture* l = new Texture("Images/LaserBeam.png");
-				Laser* laser = new Laser(input);
-				laser->AssignTexture(l->getTexture());
-				laser->Scale = vec2(50, 50);
-				laser->Position = vec2(p->Position.x / 2, p->Position.y / 2);
-				laserBeams.push_back(laser);
-			}
+			
 
 			for (Sprite* s : sprites)
 			{
@@ -306,11 +292,6 @@ void Update(int i)
 
 				a->FixedUpdate();
 
-			}
-
-			for (Laser* l : laserBeams)
-			{
-				l->FixedUpdate();
 			}
 
 

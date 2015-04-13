@@ -3,7 +3,7 @@
 class Laser:public Sprite
 {
 public:
-
+	bool isVisible;
 	void Update();
 
 	Laser(Input* input);

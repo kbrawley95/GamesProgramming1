@@ -4,6 +4,7 @@
 Laser::Laser(Input* input) :Sprite(input)
 {
 	Sprite::input = input;
+	isVisible = false;
 }
 
 Laser::Laser()
@@ -18,8 +19,6 @@ Laser::~Laser()
 
 void Laser::Update()
 {
-	if (input->GetKey(KEYS::Space))
-	{
-		Position += vec2(0,10);
-	}
+	
 }
+
