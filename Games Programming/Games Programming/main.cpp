@@ -42,6 +42,7 @@ void Render();
 void Update(int i);
 void KeyboardUp(unsigned char k, int x, int y);
 void KeyboardDown(unsigned char k, int x, int y);
+void FixedUpdate(int i);
 //void glutLeaveMainLoop(void);
 
 int main(int argc, char **argv)
@@ -76,7 +77,7 @@ int main(int argc, char **argv)
 
 	//Setup OpenGL Methods
 	glutReshapeFunc(Reshape);
-
+	glutTimerFunc( 10 , FixedUpdate, 0);
 	glutKeyboardUpFunc(KeyboardUp);
 	glutKeyboardFunc(KeyboardDown);
 
@@ -88,6 +89,15 @@ int main(int argc, char **argv)
 		fprintf(stderr, "GLEW error");
 		return 1;
 	}
+
+	//Start up a loop that runs in the background
+	glutMainLoop();
+	return 0;
+}
+
+void FixedUpdate(int i)
+{
+	//Keeps repeating every 10 miliseconds
 
 	switch (gameStates)
 	{
@@ -188,9 +198,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	//Start up a loop that runs in the background
-	glutMainLoop();
-	return 0;
+	glutTimerFunc( 10, Update, 0);
 }
 
 void Reshape(int w, int h)
