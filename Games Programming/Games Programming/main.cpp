@@ -5,7 +5,7 @@
 #include "Background.h"
 #include "Asteroid.h"
 #include "Laser.h"
-#include "CircleCollider.h"
+
 
 enum States
 {
@@ -22,16 +22,18 @@ vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
 vector<Laser*> laserBeams;
 
+
+
 //Instances
 Input* input;
 Background* bkGround = new Background(input);
 Background* bkGround2 = new Background(input);
-
 Player* p = new Player(input);
 
 
-int width = 800;
-int height = 600;
+
+int width = 1027;
+int height = 768;
 
 //Open GL Methods
 void Reshape(int w, int h);
@@ -43,8 +45,6 @@ void KeyboardDown(unsigned char k, int x, int y);
 
 int main(int argc, char **argv)
 {
-	
-
 	//Initialize Glut
 	glutInit(&argc, argv);
 
@@ -71,52 +71,11 @@ int main(int argc, char **argv)
 	mciSendString("resume MY_SND");
 	mciSendString("stop MY_SND");
 	*/
-	mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
-	mciSendString("play song1", NULL, 0, 0);
 
-	//Background 1
-	Texture* bkGroundTexture = new Texture("Images/space.jpg");
-	bkGround->AssignTexture(bkGroundTexture->getTexture());
-	bkGround->Scale = vec2(width * 2, height * 2);
-	bkGround->Position = vec2(0, 0);
-	sprites.push_back(bkGround);
-
-	//Background2
-	Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
-	bkGround2->AssignTexture(bkGroundTexture2->getTexture());
-	bkGround2->Scale = vec2(width * 2, height * 2);
-	bkGround2->Position = vec2(0, 0);
-	sprites.push_back(bkGround2);
-
-	//Player Ship
-	CircleCollider* c1 = new CircleCollider();
-	Texture* t = new Texture("Images/ship.png");
-	p->AssignTexture(t->getTexture());
-	p->AssignCircleCollider(c1);
-	p->Scale = vec2(50, 50);
-	p->Position = vec2(400, 500);
-	sprites.push_back(p);
-
-	//Asteroids
-	for (int i = 0; i < 5; i++)
-	{
-		CircleCollider* c2 = new CircleCollider();
-		Texture* a = new Texture("Images/asteroid.png");
-		asteroids.push_back(new Asteroid);
-		asteroids[i]->AssignTexture(a->getTexture());
-		asteroids[i]->AssignCircleCollider(c2);
-		asteroids[i]->Scale = vec2(120, 120);
-		asteroids[i]->Position = vec2(rand() % (800 + 1), rand()%(-600-(-100)));
-		
-	}
-
-
-	
 
 	//Setup OpenGL Methods
 	glutReshapeFunc(Reshape);
-	glutDisplayFunc(Render);
-	glutTimerFunc( 10 , Update, 0);
+
 	glutKeyboardUpFunc(KeyboardUp);
 	glutKeyboardFunc(KeyboardDown);
 
@@ -134,16 +93,88 @@ int main(int argc, char **argv)
 
 		case MainMenu:
 		{
+			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
+			mciSendString("play song1", NULL, 0, 0);
+
+			//Background 1
+			Texture* bkGroundTexture = new Texture("Images/space.jpg");
+			bkGround->AssignTexture(bkGroundTexture->getTexture());
+			bkGround->Scale = vec2(width * 2, height * 2);
+			bkGround->Position = vec2(0, 0);
+			sprites.push_back(bkGround);
+
+			//Background2
+			Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
+			bkGround2->AssignTexture(bkGroundTexture2->getTexture());
+			bkGround2->Scale = vec2(width * 2, height * 2);
+			bkGround2->Position = vec2(0, 0);
+			sprites.push_back(bkGround2);
+
+			glutDisplayFunc(Render);
+			glutTimerFunc(10, Update, 0);
+
 			break;
 		}
 
 		case Playing:
 		{
+			mciSendString("open Audio\\rumble.mp3 type mpegvideo alias song1", NULL, 0, 0);
+			mciSendString("play song1", NULL, 0, 0);
+
+			//Background 1
+			Texture* bkGroundTexture = new Texture("Images/space.jpg");
+			bkGround->AssignTexture(bkGroundTexture->getTexture());
+			bkGround->Scale = vec2(width * 2, height * 2);
+			bkGround->Position = vec2(0, 0);
+			sprites.push_back(bkGround);
+
+			//Background2
+			Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
+			bkGround2->AssignTexture(bkGroundTexture2->getTexture());
+			bkGround2->Scale = vec2(width * 2, height * 2);
+			bkGround2->Position = vec2(0, 0);
+			sprites.push_back(bkGround2);
+
+			//Player Ship
+			Texture* t = new Texture("Images/ship.png");
+			p->AssignTexture(t->getTexture());
+			p->Scale = vec2(50, 50);
+			p->Position = vec2(400, 500);
+			p->setBoundingBox(p->_boundingBox);
+			sprites.push_back(p);
+
+			//Asteroids
+			for (int i = 0; i < 5; i++)
+			{
+				Texture* a = new Texture("Images/asteroid.png");
+				asteroids.push_back(new Asteroid);
+				asteroids[i]->AssignTexture(a->getTexture());
+				asteroids[i]->Scale = vec2(120, 120);
+				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
+
+			}
+			glutDisplayFunc(Render);
+			glutTimerFunc(10, Update, 0);
+			
+
 			break;
 		}
 
 		case GameOver:
 		{
+			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
+			mciSendString("play song1", NULL, 0, 0);
+
+			//GameOver Splashscreen
+			Texture* bkGroundTexture3 = new Texture("Images/space.jpg");
+			bkGround->AssignTexture(bkGroundTexture3->getTexture());
+			bkGround->Scale = vec2(width * 2, height * 2);
+			bkGround->Position = vec2(0, 0);
+			sprites.push_back(bkGround);
+
+			glutDisplayFunc(Render);
+			glutTimerFunc(10, Update, 0);
+
 			break;
 		}
 	}
@@ -173,69 +204,110 @@ void Render()
     glLoadIdentity();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	//for (list<Entity>::iterator iter=entities.begin();iter!=entities.end();++iter)
-	for (Sprite* s : sprites)
+
+	switch (gameStates)
 	{
-		s->Render();
-	}
-	for (Asteroid* a : asteroids)
-	{
-		a->Render();
+
+		case MainMenu:
+		{
+			bkGround->Render();
+			bkGround2 ->Render();
+
+			break;
+		}
+
+		case Playing:
+		{
+			//for (list<Entity>::iterator iter=entities.begin();iter!=entities.end();++iter)
+			for (Sprite* s : sprites)
+			{
+				s->Render();
+			}
+
+			for (Asteroid* a : asteroids)
+			{
+				a->Render();
+			}
+
+			for (Laser* l : laserBeams)
+			{
+				l->Render();
+			}
+
+			break;
+		}
+
+		case GameOver:
+		{
+
+			break;
+		}
 	}
 
-	for (Laser* l : laserBeams)
-	{
-		l->Render();
-	}
+	
 
 	glutSwapBuffers();
 }
 	
 void Update(int i)
 {
-	//Lasers
-	if (input->GetKey(KEYS::Space))
+	switch (gameStates)
 	{
-		CircleCollider* c3 = new CircleCollider();
-		Texture* l = new Texture("Images/LaserBeam.png");
-		Laser* laser = new Laser(input);
-		laser->AssignTexture(l->getTexture());
-		laser->AssignCircleCollider(c3);
-		laser->Scale = vec2(50, 50);
-		laser->Position = vec2(p->Position.x / 2, p->Position.y / 2);
-		laserBeams.push_back(laser);
-	}
-
-	for (Sprite* s : sprites)
-	{
-		if (s->getCollider()->IsColliding())
+		case MainMenu:
 		{
-			delete s;
+
+			if (input->GetKey(KEYS::Space))
+			{
+				mciSendString("stop song1", NULL, 0,0);
+				gameStates = Playing;
+			}
+
+			bkGround->FixedUpdate();
+			bkGround2->FixedUpdate();
+
+			break;
 		}
 
-		s->FixedUpdate();
-
-	}
-
-	for (Asteroid* a: asteroids)
-	{
-		if (a->getCollider()->IsColliding())
+		case Playing:
 		{
-			delete a;
+			//Lasers
+			if (input->GetKey(KEYS::Space))
+			{
+				Texture* l = new Texture("Images/LaserBeam.png");
+				Laser* laser = new Laser(input);
+				laser->AssignTexture(l->getTexture());
+				laser->Scale = vec2(50, 50);
+				laser->Position = vec2(p->Position.x / 2, p->Position.y / 2);
+				laserBeams.push_back(laser);
+			}
+
+			for (Sprite* s : sprites)
+			{
+
+				s->FixedUpdate();
+
+			}
+
+			for (Asteroid* a : asteroids)
+			{
+
+				a->FixedUpdate();
+
+			}
+
+			for (Laser* l : laserBeams)
+			{
+				l->FixedUpdate();
+			}
+
+
+			break;
 		}
-		a->FixedUpdate();
 
-	}
-
-	for (Laser* l : laserBeams)
-	{
-		if (l->getCollider()->IsColliding())
+		case GameOver:
 		{
-			delete l;
+			break;
 		}
-
-		
-		l->FixedUpdate();
 	}
 
 	// Reset timer

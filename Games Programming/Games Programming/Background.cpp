@@ -13,7 +13,7 @@ Background::~Background()
 void Background::Update()
 {
 	//Scroll Speed
-	Position.y += 3;
+	Position.y += speed;
 
 	//If the texture reaches the bottom of the screen, reset position
 	if (Position.y > 599)
