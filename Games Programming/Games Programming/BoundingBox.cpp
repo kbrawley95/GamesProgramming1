@@ -1,15 +1,20 @@
 #include "BoundingBox.h"
 
-BoundingBox getBoundingBox(int top, int bottom, int left, int right)
+
+BoundingBox::BoundingBox()
 {
-	BoundingBox boundingBox;
+}
 
-	boundingBox.top = top;
-	boundingBox.bottom = bottom;
-	boundingBox.left = left;
-	boundingBox.right = right;
+BoundingBox::~BoundingBox()
+{
+}
 
-	return boundingBox;
 
+void BoundingBox::Update()
+{
+	top = sprite->Position.y + (size.y / 2);
+	bottom = sprite->Position.y - (size.y / 2);
+	right = sprite->Position.x + (size.x / 2);
+	left = sprite->Position.x - (size.x / 2);
 }
 

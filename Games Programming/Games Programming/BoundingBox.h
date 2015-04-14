@@ -1,14 +1,21 @@
 #pragma once
-class BoundingBox
+#include "Common.h"
+#include "Sprite.h"
+#include "CircleCollider.h"
+#include "Collider.h"
+
+class BoundingBox:public Collider
 {
 public:
 
-	int top;
-	int bottom;
-	int left;
-	int right;
+	Sprite* sprite;
 
-	BoundingBox getBoundingBox(int top, int bottom, int left, int right);
+	vec2 size;
+
+	void Update();
+
+	BoundingBox();
+	~BoundingBox();
 
 };
 

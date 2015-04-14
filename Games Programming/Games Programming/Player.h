@@ -20,6 +20,8 @@ public:
 	void Update();
 
 	void Shoot();
+	
+
 
 	void UpdateBullets();
 	void RenderBullets();

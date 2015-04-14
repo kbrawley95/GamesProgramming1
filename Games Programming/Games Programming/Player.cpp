@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <Windows.h>
 
 
 Player::Player(Input* input) : Sprite(input)
@@ -42,6 +43,7 @@ void Player::Update()
 	if (input->GetKey(KEYS::Space))
 	{
 		Shoot();
+		PlaySound("Audio/laser5.wav", NULL, SND_ASYNC | SND_FILENAME);
 	}
 
 	UpdateBullets();

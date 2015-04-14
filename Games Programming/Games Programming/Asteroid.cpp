@@ -20,6 +20,7 @@ Asteroid::~Asteroid()
 
 void Asteroid::Update()
 {
+	Rotation += 16;
 	
 	Position.y += speed;
 	
@@ -28,5 +29,10 @@ void Asteroid::Update()
 		Position = vec2(rand() % (1024 - 100), -100);
 	}
 
+}
+
+void Asteroid::setBoundingBox(BoundingBox boundingBox)
+{
+	_boundingBox = boundingBox;
 }
 

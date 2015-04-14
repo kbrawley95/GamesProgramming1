@@ -57,7 +57,6 @@ int main(int argc, char **argv)
 	gameStates = MainMenu;
 
 
-
 	//setup some memory buffers for our display
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH);
 
@@ -112,6 +111,7 @@ void ChangeScene()
 			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
 			mciSendString("play song1", NULL, 0, 0);
 
+			
 			//Background 1
 			Texture* bkGroundTexture = new Texture("Images/space.jpg");
 			bkGround->AssignTexture(bkGroundTexture->getTexture());
@@ -125,6 +125,8 @@ void ChangeScene()
 			bkGround2->Scale = vec2(width * 2, height * 2);
 			bkGround2->Position = vec2(0, 0);
 			sprites.push_back(bkGround2);
+
+		
 
 			//Text Overly
 			Texture* bkGroundTexture3 = new Texture("Images/MainMenu.png");
@@ -162,7 +164,6 @@ void ChangeScene()
 			p->AssignTexture(t->getTexture());
 			p->Scale = vec2(50, 50);
 			p->Position = vec2(400, 500);
-			p->setBoundingBox(p->_boundingBox);
 			sprites.push_back(p);
 
 			//Asteroids
@@ -173,7 +174,6 @@ void ChangeScene()
 				asteroids[i]->AssignTexture(a->getTexture());
 				asteroids[i]->Scale = vec2(120, 120);
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
-
 			}
 
 
@@ -299,7 +299,6 @@ void Update(int i)
 					ChangeScene();
 				}
 			}
-
 			bkGround->FixedUpdate();
 			bkGround2->FixedUpdate();
 			bkGround3->speed = 0;
@@ -310,7 +309,6 @@ void Update(int i)
 		case Playing:
 		{
 			
-
 			for (Sprite* s : sprites)
 			{
 
@@ -346,6 +344,12 @@ void Update(int i)
 	//Update the display
 	glutPostRedisplay();
 }
+
+bool Collision()
+{
+	return 0;
+}
+
 
 void KeyboardUp(unsigned char k, int x, int y)
 {
