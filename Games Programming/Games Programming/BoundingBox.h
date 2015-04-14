@@ -7,7 +7,6 @@
 class BoundingBox:public Collider
 {
 public:
-
 	Sprite* sprite;
 
 	vec2 size;

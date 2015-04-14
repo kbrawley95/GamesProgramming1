@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
 
-class Collider 
+class Collider
 {
 public:
 	bool colliding;
@@ -10,8 +10,6 @@ public:
 	float bottom;
 	float right;
 	float left;
-
-	float bounceRatio;
 
 	virtual void Update()
 	{
@@ -24,7 +22,6 @@ public:
 
 	Collider()
 	{
-		bounceRatio = 0;
 		top = 0;
 		left = 0;
 		right = 0;
