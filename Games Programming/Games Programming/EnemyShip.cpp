@@ -26,6 +26,7 @@ void EnemyShip::Shoot()
 		Laser* laser = new Laser(input);
 		laser->AssignTexture(l->getTexture());
 		laser->Scale = vec2(50, 50);
+		laser->AddCollision(50);
 		laser->Position = vec2(EnemyShip::Position.x + Scale.x / 2 - 25, EnemyShip::Position.y + Scale.y / 2 - 25);
 		PlaySound("Audio/laser6.wav", NULL, SND_ASYNC | SND_FILENAME);
 

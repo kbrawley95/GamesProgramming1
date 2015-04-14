@@ -27,14 +27,14 @@ void Asteroid::Update()
 	origin.x = Position.x + Scale.x / 2 - 25;
 	origin.y = Position.y + Scale.y / 2 - 25;
 
-	clock_t begin = clock();
-	clock_t end = clock();
+	//clock_t begin = clock();
+	//clock_t end = clock();
 
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	//double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	rotationAngle += elapsed_secs;
+	//rotationAngle += elapsed_secs;
 
-	Rotation += 20 % (int)rotationAngle;
+	//Rotation += 20 % (int)rotationAngle;
 	
 	Position.y += speed;
 	 

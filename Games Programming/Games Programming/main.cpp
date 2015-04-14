@@ -103,6 +103,9 @@ int main(int argc, char **argv)
 void ChangeScene()
 {
 	sprites.clear();
+	enemyShips.clear();
+	asteroids.clear();
+
 	switch (gameStates)
 	{
 
@@ -173,7 +176,8 @@ void ChangeScene()
 				asteroids.push_back(new Asteroid);
 				asteroids[i]->AssignTexture(a->getTexture());
 				asteroids[i]->Scale = vec2(120, 120);
-				//asteroids[i]->AddCollision();
+				asteroids[i]->Rotation = 0;
+				asteroids[i]->AddCollision(50);
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 			}
 
@@ -188,7 +192,6 @@ void ChangeScene()
 				enemyShips[i]->Rotation = 0;
 				enemyShips[i]->AddCollision(50);
 				enemyShips[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
-
 
 			}
 
@@ -205,16 +208,25 @@ void ChangeScene()
 			break;
 		}
 		case GameOver:
-		{
+		{	
+			mciSendString("stop song2", NULL, 0, 0);
 			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
 			mciSendString("play song1", NULL, 0, 0);
 
-			//GameOver Splashscreen
-			Texture* bkGroundTexture3 = new Texture("Images/space.jpg");
-			bkGround->AssignTexture(bkGroundTexture3->getTexture());
+			//Background 1
+			Texture* bkGroundTexture = new Texture("Images/space.jpg");
+			bkGround->AssignTexture(bkGroundTexture->getTexture());
 			bkGround->Scale = vec2(width * 2, height * 2);
 			bkGround->Position = vec2(0, 0);
 			sprites.push_back(bkGround);
+
+			//Background2
+			Texture* bkGroundTexture2 = new Texture("Images/space.jpg");
+			bkGround2->AssignTexture(bkGroundTexture2->getTexture());
+			bkGround2->Scale = vec2(width * 2, height * 2);
+			bkGround2->Position = vec2(0, 0);
+			sprites.push_back(bkGround2);
+
 			break;
 		}
 	}
@@ -276,7 +288,10 @@ void Render()
 
 		case GameOver:
 		{
-
+			for (Sprite* s : sprites)
+			{
+				s->Render();
+			}
 			break;
 		}
 	}
@@ -331,18 +346,25 @@ void Update(int i)
 			}
 
 
-
 			break;
 		}
 			
 		case GameOver:
 		{
+			for (Sprite* s : sprites)
+			{
+				s->FixedUpdate();
+			}
+
 			break;
 		}
 	}
 
+
+	//Collisions
 	if (gameStates == Playing)
 	{
+		//Player Ship/EnemyShip Collision
 		for (EnemyShip* e : enemyShips)
 		{
 			if (glm::distance(e->Position, sprites[2]->Position) < (e->radius + sprites[2]->radius) / 2)
@@ -350,11 +372,13 @@ void Update(int i)
 				vec2 normal = glm::normalize(sprites[2]->Position - e->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
-				gameStates = GameOver;
-				ChangeScene();
+					gameStates = GameOver;
+					ChangeScene();
+				
 			}
 		}
 
+		//Asteroid/Player Collision
 		for (Asteroid* a : asteroids)
 		{
 			if (glm::distance(a->Position, sprites[2]->Position) < (a->radius + sprites[2]->radius) / 2)
@@ -362,11 +386,25 @@ void Update(int i)
 				vec2 normal = glm::normalize(sprites[2]->Position - a->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
-				//gameStates = GameOver;
-				//ChangeScene();
+				gameStates = GameOver;
+				ChangeScene();
 			}
 		}
 
+		//Player Laser/Asteroid Collision
+		for (Asteroid* a : asteroids)
+		{
+			Player* p = dynamic_cast<Player*>(sprites[2]);
+			for (Laser* l : p->laserBeams)
+			{
+				if (glm::distance(a->Position, l->Position) < (a->radius + l->radius) / 2)
+				{
+					a->Position = vec2(0, 800);
+				}
+			}
+		}
+
+		//Player Laser/EnemyShip Collision
 		for (EnemyShip* e : enemyShips)
 		{
 			Player* p = dynamic_cast<Player*>(sprites[2]);
@@ -378,6 +416,28 @@ void Update(int i)
 				}
 			}
 		}
+
+		//Enemy Laser/Player Collision
+		for (Sprite* s: sprites)
+		{
+			s=dynamic_cast<Player*>(sprites[2]);
+
+			for (EnemyShip* e: enemyShips)
+			{
+				for (Laser* l :e->laserBeams )
+				{
+					if (glm::distance(s->Position, l->Position) < (s->radius + l->radius) / 2)
+					{
+						//Collision, Change Scene
+						gameStates=GameOver;
+						ChangeScene();
+						cout << "Player Hit";
+					}
+				}
+			}
+			
+		}
+		
 	}
 
 	// Reset timer
