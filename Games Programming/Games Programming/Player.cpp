@@ -62,7 +62,7 @@ void Player::Shoot()
 		Laser* laser = new Laser(input);
 		laser->AssignTexture(l->getTexture());
 		laser->Scale = vec2(50, 50);
-		laser->Position = vec2(Player::Position.x/2+200, Player::Position.y/2);
+		laser->Position = vec2(Player::Position.x/2+200, Player::Position.y/2+200);
 
 		if (laserBeams.capacity() < 20)
 		{

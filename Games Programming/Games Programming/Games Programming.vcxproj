@@ -66,6 +66,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Texture.h" />
