@@ -4,6 +4,9 @@
 
 class Asteroid :public Sprite
 {
+private: 
+	vec2 origin;
+
 public:
 	BoundingBox _boundingBox;
 

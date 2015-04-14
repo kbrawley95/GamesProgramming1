@@ -184,6 +184,7 @@ void ChangeScene()
 				enemyShips.push_back(new EnemyShip);
 				enemyShips[i]->AssignTexture(e->getTexture());
 				enemyShips[i]->Scale = vec2(50, 50);
+				enemyShips[i]->Rotation = 0;
 				enemyShips[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
 

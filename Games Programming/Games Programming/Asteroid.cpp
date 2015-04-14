@@ -20,6 +20,8 @@ Asteroid::~Asteroid()
 
 void Asteroid::Update()
 {
+	origin.x=
+
 	Rotation += 16;
 	
 	Position.y += speed;

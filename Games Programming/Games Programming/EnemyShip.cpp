@@ -26,8 +26,9 @@ void EnemyShip::Shoot()
 		Laser* laser = new Laser(input);
 		laser->AssignTexture(l->getTexture());
 		laser->Scale = vec2(50, 50);
-		laser->Position = vec2(EnemyShip::Position.x / 2 + 200, EnemyShip::Position.y / 2);
+		laser->Position = vec2(EnemyShip::Position.x + Scale.x / 2 - 25, EnemyShip::Position.y + Scale.y / 2 - 25);
 		PlaySound("Audio/laser6.wav", NULL, SND_ASYNC | SND_FILENAME);
+
 		if (laserBeams.capacity() < 20)
 		{
 			laser->isVisible = true;

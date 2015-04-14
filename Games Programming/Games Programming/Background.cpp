@@ -16,7 +16,7 @@ void Background::Update()
 	Position.y += speed;
 
 	//If the texture reaches the bottom of the screen, reset position
-	if (Position.y > 599)
+	if (Position.y > 1023)
 	{
 		Position.y = 0;
 	}
