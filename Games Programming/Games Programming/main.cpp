@@ -30,8 +30,8 @@ Input* input;
 Background* bkGround = new Background(input);
 Background* bkGround2 = new Background(input);
 Background* bkGround3 = new Background(input);
-HUD* hud = new HUD();
-Player* p = new Player(input);
+HUD* hud;
+Player* p;
 
 
 
@@ -126,7 +126,6 @@ void ChangeScene()
 			bkGround2->Position = vec2(0, 0);
 			sprites.push_back(bkGround2);
 
-		
 
 			//Text Overly
 			Texture* bkGroundTexture3 = new Texture("Images/MainMenu.png");
@@ -162,6 +161,7 @@ void ChangeScene()
 			Texture* t = new Texture("Images/ship.png");
 			Player* p = new Player(input);
 			p->AssignTexture(t->getTexture());
+			p->AddCollision(50);
 			p->Scale = vec2(50, 50);
 			p->Position = vec2(400, 500);
 			sprites.push_back(p);
@@ -173,6 +173,7 @@ void ChangeScene()
 				asteroids.push_back(new Asteroid);
 				asteroids[i]->AssignTexture(a->getTexture());
 				asteroids[i]->Scale = vec2(120, 120);
+				//asteroids[i]->AddCollision();
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 			}
 
@@ -185,6 +186,7 @@ void ChangeScene()
 				enemyShips[i]->AssignTexture(e->getTexture());
 				enemyShips[i]->Scale = vec2(50, 50);
 				enemyShips[i]->Rotation = 0;
+				enemyShips[i]->AddCollision(50);
 				enemyShips[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
 
@@ -192,7 +194,7 @@ void ChangeScene()
 
 			//HUD 
 			Texture* h = new Texture("Images/healthbar.png");
-			
+			hud = new HUD();
 			hud->AssignTexture(h->getTexture());
 			hud->Scale=vec2(228, 20);
 			hud->Position=  vec2(128, 10);
@@ -323,7 +325,6 @@ void Update(int i)
 				a->FixedUpdate();
 
 			}
-
 			for (EnemyShip* e : enemyShips)
 			{
 				e->FixedUpdate();
@@ -337,6 +338,19 @@ void Update(int i)
 		case GameOver:
 		{
 			break;
+		}
+	}
+
+	if (gameStates == Playing)
+	{
+		for (EnemyShip* e : enemyShips)
+		{
+			if (glm::distance(e->Position, sprites[2]->Position) < (e->radius + sprites[2]->radius))
+			{
+				vec2 normal = glm::normalize(sprites[2]->Position - e->Position);
+				sprites[2]->Position += normal;
+				//Its colliding
+			}
 		}
 	}
 

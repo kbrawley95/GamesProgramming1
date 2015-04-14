@@ -2,7 +2,6 @@
 #include "Common.h"
 #include "Input.h"
 #include "Texture.h"
-#include "CircleCollider.h"
 
 class Sprite
 {
@@ -16,9 +15,10 @@ public:
 	float Rotation;
 	vec2 Scale;
 	bool IsStatic;
-
-	float speed = 2;
+	float speed;
+	bool collisionEnabled;
 	vec2 PivotOffset;
+	float radius;
 
 	//Physics
 	vec2 Velocity;
@@ -29,6 +29,7 @@ public:
 	void Render();
 	void FixedUpdate();
 	void AssignTexture(GLuint t);
+	void AddCollision(float radius);
 
 	//Virtual
 	virtual void Update();

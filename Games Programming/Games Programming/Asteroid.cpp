@@ -44,9 +44,3 @@ void Asteroid::Update()
 	}
 
 }
-
-void Asteroid::setBoundingBox(BoundingBox boundingBox)
-{
-	_boundingBox = boundingBox;
-}
-

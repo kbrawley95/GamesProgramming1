@@ -12,6 +12,8 @@ Sprite::Sprite(Input* input)
 	Velocity = vec2(0, 0);
 	Torque = 0;
 	Mass = 1;
+	speed = 2;
+	collisionEnabled = false;
 }
 
 Sprite::Sprite()
@@ -23,6 +25,12 @@ Sprite::Sprite()
 Sprite::~Sprite()
 {
 
+}
+
+void Sprite::AddCollision(float radius)
+{
+	Sprite::radius = radius;
+	collisionEnabled = true;
 }
 
 void Sprite::Render()
@@ -69,7 +77,6 @@ void Sprite::FixedUpdate()
 {
 	if (!IsStatic)
 	{
-		cout << Velocity.y;
 		Position += Velocity;
 		Rotation += Torque;
 	}
@@ -84,7 +91,6 @@ void Sprite::AddTorque(float t)
 {
 	Torque = t / Mass;
 }
-
 
 void Sprite::AssignTexture(GLuint t)
 {

@@ -3,6 +3,7 @@
 Background::Background(Input* input) : Sprite(input)
 {
 	Sprite::input = input;
+	speed = 3;
 }
 
 

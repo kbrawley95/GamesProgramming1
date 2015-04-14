@@ -6,7 +6,7 @@ class Background : public Sprite
 public:
 	void Update();
 
-	float speed=3;
+	float speed;
 
 	Background(Input* input);
 	~Background();

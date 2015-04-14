@@ -1,6 +1,5 @@
 #pragma once
 #include "Sprite.h"
-#include "BoundingBox.h"
 #include "Laser.h"
 
 class Player: public Sprite
@@ -12,13 +11,9 @@ private:
 
 
 public:
-	BoundingBox _boundingBox;
 	vector<Laser*> laserBeams;
 
-	void setBoundingBox(BoundingBox boundingBox);
-
 	void Update();
-
 	void Shoot();
 	
 

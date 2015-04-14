@@ -12,12 +12,6 @@ Player::Player(Input* input) : Sprite(input)
 Player::~Player()
 {
 }
-
-void Player::setBoundingBox(BoundingBox boundingBox)
-{
-	_boundingBox = boundingBox;
-}
-
 void Player::Update()
 {
 	if (input->GetKey(KEYS::W) )
