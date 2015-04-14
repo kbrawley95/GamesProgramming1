@@ -57,6 +57,7 @@ void Player::Shoot()
 		Texture* l = new Texture("Images/LaserBeam.png");
 		Laser* laser = new Laser(input);
 		laser->AssignTexture(l->getTexture());
+		laser->AddCollision(50);
 		laser->Scale = vec2(50, 50);
 		laser->Position = vec2(Player::Position.x + Scale.x/2 -25, Player::Position.y+Scale.y/2-25);
 

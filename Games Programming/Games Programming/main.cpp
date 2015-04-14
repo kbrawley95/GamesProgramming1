@@ -345,7 +345,7 @@ void Update(int i)
 	{
 		for (EnemyShip* e : enemyShips)
 		{
-			if (glm::distance(e->Position, sprites[2]->Position) < (e->radius + sprites[2]->radius))
+			if (glm::distance(e->Position, sprites[2]->Position) < (e->radius + sprites[2]->radius) / 2)
 			{
 				vec2 normal = glm::normalize(sprites[2]->Position - e->Position);
 				sprites[2]->Position += normal;
@@ -357,13 +357,25 @@ void Update(int i)
 
 		for (Asteroid* a : asteroids)
 		{
-			if (glm::distance(a->Position, sprites[2]->Position) < (a->radius + sprites[2]->radius))
+			if (glm::distance(a->Position, sprites[2]->Position) < (a->radius + sprites[2]->radius) / 2)
 			{
 				vec2 normal = glm::normalize(sprites[2]->Position - a->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
-				gameStates = GameOver;
-				ChangeScene();
+				//gameStates = GameOver;
+				//ChangeScene();
+			}
+		}
+
+		for (EnemyShip* e : enemyShips)
+		{
+			Player* p = dynamic_cast<Player*>(sprites[2]);
+			for (Laser* l : p->laserBeams)
+			{
+				if (glm::distance(e->Position, l->Position) < (e->radius + l->radius) / 2)
+				{
+					e->Position = vec2(0, 800);
+				}
 			}
 		}
 	}
