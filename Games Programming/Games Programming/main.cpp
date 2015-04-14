@@ -334,7 +334,7 @@ void Update(int i)
 
 			break;
 		}
-
+			
 		case GameOver:
 		{
 			break;
@@ -350,6 +350,20 @@ void Update(int i)
 				vec2 normal = glm::normalize(sprites[2]->Position - e->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
+				gameStates = GameOver;
+				ChangeScene();
+			}
+		}
+
+		for (Asteroid* a : asteroids)
+		{
+			if (glm::distance(a->Position, sprites[2]->Position) < (a->radius + sprites[2]->radius))
+			{
+				vec2 normal = glm::normalize(sprites[2]->Position - a->Position);
+				sprites[2]->Position += normal;
+				//Its colliding
+				gameStates = GameOver;
+				ChangeScene();
 			}
 		}
 	}
