@@ -21,13 +21,11 @@ Asteroid::~Asteroid()
 void Asteroid::Update()
 {
 	
-
-	
 	Position.y += speed;
 	
-	if (Position.y > 599)
+	if (Position.y > 768)
 	{
-		Position = vec2(rand() % (800 - 1), -100);
+		Position = vec2(rand() % (1024 - 100), -100);
 	}
 
 }

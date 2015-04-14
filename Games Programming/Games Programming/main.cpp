@@ -2,9 +2,11 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "Player.h"
+#include "EnemyShip.h"
 #include "Background.h"
 #include "Asteroid.h"
 #include "Laser.h"
+#include "HUD.h"
 
 
 enum States
@@ -20,6 +22,7 @@ States gameStates;
 //Public Varibles
 vector<Sprite*> sprites;
 vector<Asteroid*> asteroids;
+vector<EnemyShip*> enemyShips;
 
 
 //Instances
@@ -27,11 +30,12 @@ Input* input;
 Background* bkGround = new Background(input);
 Background* bkGround2 = new Background(input);
 Background* bkGround3 = new Background(input);
+HUD* hud = new HUD();
 Player* p = new Player(input);
 
 
 
-int width = 1027;
+int width = 1024;
 int height = 768;
 
 //Open GL Methods
@@ -162,7 +166,7 @@ void ChangeScene()
 			sprites.push_back(p);
 
 			//Asteroids
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 7; i++)
 			{
 				Texture* a = new Texture("Images/asteroid.png");
 				asteroids.push_back(new Asteroid);
@@ -171,6 +175,28 @@ void ChangeScene()
 				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
 			}
+
+
+			//Enemy Ships
+			for (int i = 0; i < 3; i++)
+			{
+				Texture* e = new Texture("Images/enemyship.png");
+				enemyShips.push_back(new EnemyShip);
+				enemyShips[i]->AssignTexture(e->getTexture());
+				enemyShips[i]->Scale = vec2(50, 50);
+				enemyShips[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
+
+
+			}
+
+			//HUD 
+			Texture* h = new Texture("Images/healthbar.png");
+			
+			hud->AssignTexture(h->getTexture());
+			hud->Scale=vec2(228, 20);
+			hud->Position=  vec2(128, 10);
+			hud->Rotation = 0;
+			sprites.push_back(hud);
 
 			
 			break;
@@ -237,6 +263,11 @@ void Render()
 				a->Render();
 			}
 
+			for (EnemyShip* e : enemyShips)
+			{
+				e->Render();
+			}
+
 			break;
 		}
 
@@ -293,6 +324,12 @@ void Update(int i)
 				a->FixedUpdate();
 
 			}
+
+			for (EnemyShip* e : enemyShips)
+			{
+				e->FixedUpdate();
+			}
+
 
 
 			break;

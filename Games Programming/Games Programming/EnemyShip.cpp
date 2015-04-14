@@ -4,6 +4,7 @@
 EnemyShip::EnemyShip() :  Sprite()
 {
 	bulletDelay = 1;
+	shootDelay = 1;
 }
 
 
@@ -21,7 +22,7 @@ void EnemyShip::Shoot()
 
 	if (bulletDelay <= 0)
 	{
-		Texture* l = new Texture("Images/LaserBeam.png");
+		Texture* l = new Texture("Images/EnemyLaserBeam.png");
 		Laser* laser = new Laser(input);
 		laser->AssignTexture(l->getTexture());
 		laser->Scale = vec2(50, 50);
@@ -33,7 +34,7 @@ void EnemyShip::Shoot()
 			laserBeams.push_back(laser);
 		}
 
-		if (laserBeams.capacity() >= 20)
+		if (laserBeams.capacity() > 20)
 		{
 			laserBeams.clear();
 		}
@@ -45,12 +46,51 @@ void EnemyShip::Shoot()
 		bulletDelay = 20;
 }
 
+void EnemyShip::Update()
+{
+	Position.y += 6;
+
+	if (Position.y > 768)
+	{
+		Position = vec2(rand() % (1024 - 100), -100);
+	}
+
+
+	if (shootDelay == 0)
+	{
+		Shoot();
+		shootDelay = 20;
+	}
+
+	if (shootDelay > 0)
+		shootDelay--;
+
+
+
+	UpdateBullets();
+	RenderBullets();
+}
+
 void EnemyShip::UpdateBullets()
 {
+	float newSpeed = 10;
+
+
+	for (Laser* l : laserBeams)
+	{
+		l->Position.y = l->Position.y + newSpeed;
+		l->FixedUpdate();
+
+	}
+
+
 
 }
 
 void EnemyShip::RenderBullets()
 {
-
+	for (Laser* l : laserBeams)
+	{
+		l->Render();
+	}
 }

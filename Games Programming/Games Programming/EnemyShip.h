@@ -7,6 +7,7 @@ class EnemyShip: public Sprite
 {
 private:
 	float bulletDelay;
+	float shootDelay;
 public:
 	BoundingBox _boundingBox;
 	vector<Laser*> laserBeams;
@@ -14,6 +15,8 @@ public:
 	void setBoundingBox(BoundingBox boundingBox);
 
 	void Shoot();
+
+	void Update();
 
 	void UpdateBullets();
 	void RenderBullets();
