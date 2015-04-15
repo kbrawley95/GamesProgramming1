@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
 
-class Asteroid :public Sprite
+class Asteroid: public Sprite
 {
 private: 
 	vec2 origin;

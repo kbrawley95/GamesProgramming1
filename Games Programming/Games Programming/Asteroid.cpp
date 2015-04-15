@@ -6,14 +6,13 @@
 float speed = rand() % (7 + 5);
 
 Asteroid::Asteroid(Input* input) :Sprite(input)
-{
-	Sprite::input = input;
-	
+{	
+	speed = 3;
 }
 
 Asteroid::Asteroid()
 {
-	
+	speed = 3;
 }
 
 Asteroid::~Asteroid()
@@ -24,8 +23,8 @@ Asteroid::~Asteroid()
 
 void Asteroid::Update()
 {
-	origin.x = Position.x + Scale.x / 2 - 25;
-	origin.y = Position.y + Scale.y / 2 - 25;
+	//origin.x = Position.x + Scale.x / 2 - 25;
+	//origin.y = Position.y + Scale.y / 2 - 25;
 
 	//clock_t begin = clock();
 	//clock_t end = clock();
@@ -37,10 +36,8 @@ void Asteroid::Update()
 	//Rotation += 20 % (int)rotationAngle;
 	
 	Position.y += speed;
-	 
 	if (Position.y > 768)
 	{
 		Position = vec2(rand() % (1024 - 100), -100);
 	}
-
 }

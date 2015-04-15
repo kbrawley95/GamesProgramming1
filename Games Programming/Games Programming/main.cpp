@@ -168,30 +168,30 @@ void ChangeScene()
 			p->Position = vec2(400, 500);
 			sprites.push_back(p);
 
-			//Asteroids
-			for (int i = 0; i < 7; i++)
-			{
-				Texture* a = new Texture("Images/asteroid.png");
-				asteroids.push_back(new Asteroid);
-				asteroids[i]->AssignTexture(a->getTexture());
-				asteroids[i]->Scale = vec2(120, 120);
-				asteroids[i]->Rotation = 0;
-				asteroids[i]->AddCollision(50);
-				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
-			}
-
 
 			//Enemy Ships
 			for (int i = 0; i < 3; i++)
 			{
 				Texture* e = new Texture("Images/enemyship.png");
-				enemyShips.push_back(new EnemyShip);
+				enemyShips.push_back(new EnemyShip());
 				enemyShips[i]->AssignTexture(e->getTexture());
 				enemyShips[i]->Scale = vec2(50, 50);
 				enemyShips[i]->Rotation = 0;
 				enemyShips[i]->AddCollision(50);
 				enemyShips[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 
+			}
+
+			//Asteroids
+			for (int i = 0; i < 7; i++)
+			{
+				Texture* a = new Texture("Images/asteroid.png");
+				asteroids.push_back(new Asteroid());
+				asteroids[i]->AssignTexture(a->getTexture());
+				asteroids[i]->Scale = vec2(120, 120);
+				asteroids[i]->Rotation = 0;
+				asteroids[i]->AddCollision(50);
+				asteroids[i]->Position = vec2(rand() % (width + 1), rand() % (-height - (-100)));
 			}
 
 			//HUD 
@@ -275,7 +275,6 @@ void Render()
 
 			for (Asteroid* a : asteroids)
 			{
-				cout << "we're rendering";
 				a->Render();
 			}
 
@@ -385,7 +384,6 @@ void Update(int i)
 				
 			}
 		}
-
 		//Asteroid/Player Collision
 		for (Asteroid* a : asteroids)
 		{
@@ -417,7 +415,6 @@ void Update(int i)
 				}
 			}
 		}
-
 		//Player Laser/EnemyShip Collision
 		for (EnemyShip* e : enemyShips)
 		{
