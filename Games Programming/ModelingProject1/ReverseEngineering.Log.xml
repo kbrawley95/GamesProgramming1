@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2015-04-15T00:23:12" Importance="High" Text="Reverse Engineering Started." />
+  <Error Timestamp="2015-04-15T00:23:12" Importance="High" Text="Reverse engineer C++ type is not supported. Some DGML node(s) will be skipped during the process. Please see warnings for details." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'HUD' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Input' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'KEYS' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Laser' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Player' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Sprite' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'States' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Texture' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Asteroid' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'Background' is skipped." />
+  <Warning Timestamp="2015-04-15T00:23:12" Importance="Medium" Text="Reverse engineer C++ type 'EnemyShip' is skipped." />
+  <Message Timestamp="2015-04-15T00:23:12" Importance="High" Text="(0) type(s) fully reverse engineered." />
+  <Message Timestamp="2015-04-15T00:23:12" Importance="High" Text="The reverse engineering operation completed with (1) error(s), and (11) warning(s)." />
+</Log>

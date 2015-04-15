@@ -98,8 +98,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-//When you change scene you have to destroy the old one
-
+//Change scene, destroys the old one (frees up space in memory)
 void ChangeScene()
 {
 	sprites.clear();
@@ -210,9 +209,7 @@ void ChangeScene()
 		case GameOver:
 		{	
 			mciSendString("stop song2", NULL, 0, 0);
-			mciSendString("open Audio\\goinghigher.mp3 type mpegvideo alias song1", NULL, 0, 0);
-			mciSendString("play song1", NULL, 0, 0);
-
+			PlaySound("Audio/gameoversound.wav", NULL, SND_ASYNC | SND_FILENAME);
 			//Background 1
 			Texture* bkGroundTexture = new Texture("Images/space.jpg");
 			bkGround->AssignTexture(bkGroundTexture->getTexture());
@@ -232,6 +229,7 @@ void ChangeScene()
 	}
 }
 
+//Reshapes Window
 void Reshape(int w, int h)
 {
 	width = w;
@@ -246,6 +244,8 @@ void Reshape(int w, int h)
 	glLoadIdentity();
 }
 
+
+//Draws sprties on screen
 void Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -275,6 +275,7 @@ void Render()
 
 			for (Asteroid* a : asteroids)
 			{
+				cout << "we're rendering";
 				a->Render();
 			}
 
@@ -301,14 +302,14 @@ void Render()
 	glutSwapBuffers();
 }
 	
-//Where is Update getting called from?
+//Updates game logic
 void Update(int i)
 {
 	switch (gameStates)
 	{
 		case MainMenu:
 		{
-
+			//If the return key is pressed in menu, gameplay is initated
 			if (input->GetKey(KEYS::Return))
 			{
 				if (gameStates != Playing)
@@ -372,8 +373,15 @@ void Update(int i)
 				vec2 normal = glm::normalize(sprites[2]->Position - e->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
+
+				if (gameStates!=GameOver)
+				{
+					PlaySound("Audio/explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
 					gameStates = GameOver;
 					ChangeScene();
+
+				}
+				
 				
 			}
 		}
@@ -386,8 +394,13 @@ void Update(int i)
 				vec2 normal = glm::normalize(sprites[2]->Position - a->Position);
 				sprites[2]->Position += normal;
 				//Its colliding
-				gameStates = GameOver;
-				ChangeScene();
+				if (gameStates != GameOver)
+				{
+					PlaySound("Audio/explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
+					gameStates = GameOver;
+					ChangeScene();
+
+				}
 			}
 		}
 
@@ -399,6 +412,7 @@ void Update(int i)
 			{
 				if (glm::distance(a->Position, l->Position) < (a->radius + l->radius) / 2)
 				{
+					PlaySound("Audio/explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
 					a->Position = vec2(0, 800);
 				}
 			}
@@ -412,6 +426,7 @@ void Update(int i)
 			{
 				if (glm::distance(e->Position, l->Position) < (e->radius + l->radius) / 2)
 				{
+					PlaySound("Audio/explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
 					e->Position = vec2(0, 800);
 				}
 			}
@@ -428,9 +443,13 @@ void Update(int i)
 				{
 					if (glm::distance(s->Position, l->Position) < (s->radius + l->radius) / 2)
 					{
-						//Collision, Change Scene
-						gameStates=GameOver;
-						ChangeScene();
+						if (gameStates != GameOver)
+						{
+							PlaySound("Audio/explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
+							gameStates = GameOver;
+							ChangeScene();
+
+						}
 						cout << "Player Hit";
 					}
 				}
@@ -451,12 +470,13 @@ bool Collision()
 	return 0;
 }
 
-
+//Sets key pressed to false
 void KeyboardUp(unsigned char k, int x, int y)
 {
 	input->SetKey((KEYS)((int)toupper(k)), false);
 }
 
+//Sets key pressed to true
 void KeyboardDown(unsigned char k, int x, int y)
 {
 	input->SetKey((KEYS)((int)toupper(k)), true);

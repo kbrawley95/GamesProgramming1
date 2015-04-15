@@ -67,6 +67,11 @@ void Player::Shoot()
 			laserBeams.push_back(laser);
 		}
 
+		if (laser->Position.y <= 0)
+		{
+			laser->Position = vec2(Player::Position.x + Scale.x / 2 - 25, Player::Position.y + Scale.y / 2 - 25);
+		}
+
 		
 	}
 

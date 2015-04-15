@@ -52,12 +52,13 @@ void EnemyShip::Update()
 {
 	Position.y += 6;
 
+	//Ship reaches bottom of screen, return to top
 	if (Position.y > 768)
 	{
 		Position = vec2(rand() % (1024 - 100), -100);
 	}
 
-
+	//Fire & reset delay
 	if (shootDelay == 0)
 	{
 		Shoot();
@@ -73,6 +74,7 @@ void EnemyShip::Update()
 	RenderBullets();
 }
 
+//Updates Position of bullets
 void EnemyShip::UpdateBullets()
 {
 	float newSpeed = 10;
@@ -89,6 +91,7 @@ void EnemyShip::UpdateBullets()
 
 }
 
+//Renders Bullets
 void EnemyShip::RenderBullets()
 {
 	for (Laser* l : laserBeams)
